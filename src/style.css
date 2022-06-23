@@ -3,10 +3,14 @@ body {
     margin: 0;
   }
 
+  .container-box {
+    margin-top: 50px;    
+    border: 4px solid rgb(131, 179, 233);    
+    
+  }
+
   .container {
-    margin-top: 50px;
     max-width: 900px;
-    border: 4px solid rgb(131, 179, 233);
     padding: 15px 20px;
     font-family: "Poppins", sans-serif;
   }
@@ -119,4 +123,3 @@ body {
   .weather-icon {
     margin-top: 20px;
   }
-  
