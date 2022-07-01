@@ -27,13 +27,9 @@
   <body>
     <div class="container container-box">
       <div class="row">
-        <div class="col-6">
-          <h1 id="city">Tokyo</h1>
-        </div>
-        <div class="col-3">
-          <h3 id="date"></h3>
-          <h3 id="day-time"></h3>
-        </div>
+        <div class="col-9">
+          <h1 id="city"></h1>
+        </div>        
         <div class="form-container col-3">
           <form id="form">
             <input
@@ -49,28 +45,36 @@
           </form>
         </div>
       </div>
-      <div class="row">
+      <div class="row flex-wrap">
         <div class="col-6">
-          <h2 id="curentDegree">25</h2>
-          <a class="degree" id="C" href="#">°C</a>
-          <span>|</span>
+          <img id="weather-icon" src="" alt=""></img>
+          <h2 id="curentDegree"></h2>
+          <a class="degree active" id="C" href="#">°C</a>
+          <span class = "degree">|</span>
           <a class="degree" id="F" href="#">°F</a>
-          <p class="weather-icon"><i class="fa-solid fa-sun icon-main"></i></p>
+          
         </div>
         <div class="col-3">
-          <h4>
-            wind: 5m/s<br />
-            precipitation: 72%
-          </h4>
-        </div>
+          <h3 id="date"></h3>
+          <h3 id="day-time"></h3>
+        </div>      
         <div class="col-3">
-          <h6>Lviv</h6>
-          <h6>Kharkiv</h6>
-          <h6>Odessa</h6>
-          <h6>Dnipro</h6>
+          <h6 class = "proposed-cities">Lviv</h6>
+          <h6 class = "proposed-cities">Kharkiv</h6>
+          <h6 class = "proposed-cities">Odesa</h6>
+          <h6 class = "proposed-cities">Dnipro</h6>
         </div>
-        <hr />
-        <div class="row justify-content-md-between">
+      </div>
+      <div class="row ">
+        <div class="col-6">
+          <h4 class = "weather-info" id = "description"></h4>
+          <h4>wind : <span class = "weather-info" id = "wind"></span><span class = "weather-info"> m/s</span></h4>
+          <h4>humidity : <span class = "weather-info" id = "humidity">72</span><span class = "weather-info"> %</span></h4>
+        </div>
+        
+      </div>
+        <!-- <hr /> -->
+        <!-- <div class="row justify-content-md-between">
           <div class="col">
             <h5>Sunday</h5>
             <p class="icon-container"><i class="fa-solid fa-cloud icon"></i></p>
@@ -96,8 +100,7 @@
             <p class="icon-container"><i class="fa-solid fa-cloud icon"></i></p>
             <p class="degree">20°C</p>
           </div>
-        </div>
-      </div>      
+        </div> -->           
     </div>
     <div class="container">      
       <h4><a class = "link" href="https://github.com/OksanaFilipchuk/Weather">Open-source code</a>  by Oksana Filipchuk</h4>

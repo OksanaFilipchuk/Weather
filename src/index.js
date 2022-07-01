@@ -1,34 +1,4 @@
-let weather = {
-    paris: {
-      temp: 19.7,
-      humidity: 80
-    },
-    tokyo: {
-      temp: 17.3,
-      humidity: 50
-    },
-    lisbon: {
-      temp: 30.2,
-      humidity: 20
-    },
-    "san francisco": {
-      temp: 20.9,
-      humidity: 100
-    },
-    moscow: {
-      temp: -5,
-      humidity: 20
-    }
-  };
-  let days = [
-    "Sunday",
-    "Monday",
-    "Thursday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ];
+  
   // let tempC = Math.round(weather[userCity].temp);
   // let tempF = Math.round(weather[userCity].temp * 1.8 + 32);
   
@@ -47,36 +17,47 @@ let weather = {
   //     `Sorry, we don't know the weather for this city, try going to https://www.google.com/search?q=weather+${userCity}`
   //   );
   // }
-  
-  let date = document.querySelector("#date");
-  let currentDate = new Date();
-  date.innerHTML =
-    currentDate.getDate() +
-    ".0" +
-    (currentDate.getMonth() + 1) +
-    "." +
-    currentDate.getFullYear();
-  
-  let dayTime = document.querySelector("#day-time");
-  
-  function getHour(hour) {
-    if (hour < 10) {
-      return "0" + hour;
-    } else return hour;
+  function displayDate(){
+    let days = [
+      "Sunday",
+      "Monday",
+      "Thursday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+    let date = document.querySelector("#date");
+    let currentDate = new Date();
+    date.innerHTML =
+      currentDate.getDate() +
+      ".0" +
+      (currentDate.getMonth() + 1) +
+      "." +
+      currentDate.getFullYear();
+    
+    let dayTime = document.querySelector("#day-time");
+    
+    function getHour(hour) {
+      if (hour < 10) {
+        return "0" + hour;
+      } else return hour;
+    }
+    
+    dayTime.innerHTML =
+      days[currentDate.getDay()] +
+      " " +
+      getHour(currentDate.getHours()) +
+      ":" +
+      getHour(currentDate.getMinutes());
   }
   
-  dayTime.innerHTML =
-    days[currentDate.getDay()] +
-    " " +
-    getHour(currentDate.getHours()) +
-    ":" +
-    getHour(currentDate.getMinutes());
   
-  let degreeC = document.querySelector("#C");
-  let degreeF = document.querySelector("#F");
-  let currentDegree = document.querySelector("#curentDegree");
+    
   let currentCityButton = document.querySelector(".current");
+
   
+
   function changeToCelsius() {
     if (weather.hasOwnProperty(city.innerHTML.toLowerCase())) {
       let tempC = Math.round(weather[city.innerHTML.toLowerCase()].temp);
@@ -100,20 +81,55 @@ let weather = {
   const apiKey = "aff55d35f400e77ce588e940e4f2c0e3";
   const form = document.querySelector("#form");
   const city = document.querySelector("#city");
-  
-  function addCityTemp(event) {
+  const proposedCities = document.querySelectorAll(".proposed-cities");
+  proposedCities.forEach(elem => {
+    elem.addEventListener("click", function(){axios
+    .get(`https://api.openweathermap.org/data/2.5/weather?q=${elem.textContent}&appid=${apiKey}&units=metric`)
+    .then(showWeather)
+    .catch(function (error) {
+      alert("Enter city one more time")
+    })
+    })
+  });
+ 
+
+  function showWeather(response) {
+    let currentDegree = document.querySelector("#curentDegree");
+    currentDegree.innerHTML = Math.round(response.data.main.temp);
+    city.innerHTML = response.data.name;
+    let description = document.querySelector('#description');
+    description.innerHTML = response.data.weather[0].description;
+    let wind = document.querySelector('#wind');
+    wind.innerHTML = Math.round(response.data.wind.speed);
+    let humidity = document.querySelector("#humidity");
+    humidity.innerHTML = response.data.main.humidity;
+    let icon = document.querySelector("#weather-icon");
+    icon.setAttribute("src", `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`)
+    
+    let degreeC = document.querySelector("#C");
+    let degreeF = document.querySelector("#F");
+    degreeC.addEventListener("click", function(){
+      degreeF.classList.remove("active");
+      degreeC.classList.add("active");
+      currentDegree.innerHTML = Math.round(response.data.main.temp);
+      
+    })
+    degreeF.addEventListener("click", function(){
+      degreeC.classList.remove("active");
+      degreeF.classList.add("active");
+      currentDegree.innerHTML = Math.round((response.data.main.temp)* 1.8 + 32);
+    })
+    
+  }
+
+ 
+  function displayUserCityWeather(event) {
     event.preventDefault();
     const userCity = form.elements.city.value;
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${userCity}&appid=${apiKey}&units=metric`;
-  
-    function showTemp(response) {
-      currentDegree.innerHTML = Math.round(response.data.main.temp);
-      city.innerHTML = userCity;
-    }
-  
     axios
       .get(apiUrl)
-      .then(showTemp)
+      .then(showWeather)
       .catch(function (error) {
         alert("Enter city one more time");
       });
@@ -126,21 +142,24 @@ let weather = {
       let lon = position.coords.longitude;
       let lat = position.coords.latitude;
       let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
-      function showTemp(response) {
-        currentDegree.innerHTML = Math.round(response.data.main.temp);
-        city.innerHTML = response.data.name;
-        // console.log(response.data);
-      }
       axios
         .get(apiUrl)
-        .then(showTemp)
+        .then(showWeather)
         .catch(function (error) {
           alert("Ops...");
         });
     }
     navigator.geolocation.getCurrentPosition(addCurrentCity);
   }
+
+
   
-  form.addEventListener("submit", addCityTemp);
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Kyiv&appid=${apiKey}&units=metric`)
+        .then(showWeather)
+        .catch(function (error) {
+          alert("Ops...");
+        })
+
+  form.addEventListener("submit", displayUserCityWeather);  
   currentCityButton.addEventListener("click", showCurrentCity);
-  
+  displayDate();
