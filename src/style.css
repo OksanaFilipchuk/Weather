@@ -1,7 +1,7 @@
 body {
     box-sizing: border-box;
     margin: 0;
-    background-color:beige;
+    background: rgb(213 230 230);
   }
 
   .container-box {
@@ -20,7 +20,7 @@ body {
   h1 {
     font-weight: 600;
     font-size: 64px;
-    weight: 100%;
+    width: 100%;
     overflow: hidden;
     text-transform: capitalize;
   }
@@ -47,7 +47,7 @@ body {
     color: rgb(221, 62, 4);
     font-size: larger;
     transition: all 200ms ease-in-out;
-    cursor: pointer;
+    
   }
   h6 {
     text-align: right;
@@ -87,20 +87,40 @@ body {
     font-size: 14px;
     overflow: hidden;
   }
+
   .current:hover,
   .search:hover {
     background-color: white;
     transition: all 200ms ease-in-out;
   }
+
   h5,
   .icon-container,
   .degree {
     text-align: center;
   }
 
+  .icon-container {
+    display: block;
+  }
+
   .degree {
     position: relative;
     top: 25px;
+  }
+
+  .col-2 {
+    text-align: center;
+  }
+
+  .min-degree {
+    margin-right: 7px;
+
+  }
+
+  .max-degree {
+    font-weight: 600;
+    
   }
 
   .row {
