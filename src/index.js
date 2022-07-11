@@ -127,8 +127,12 @@ function showWeather(response) {
 
   showForecast(response);
   
+
+  
   let degreeC = document.querySelector("#C");
   let degreeF = document.querySelector("#F");
+  degreeC.classList.add("active");
+  degreeF.classList.remove("active");
   degreeC.addEventListener("click", function(){
     degreeF.classList.remove("active");
     degreeC.classList.add("active");
